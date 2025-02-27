@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}Registrar - Brenda NordHaus{% endblock %}
+
+{% block content %}
+<h2 class="text-center">Registrar</h2>
+
+<form method="POST">
+    {{ form.hidden_tag() }}
+    <div class="mb-3">
+        {{ form.username.label(class="form-label") }}
+        {{ form.username(class="form-control", placeholder="Digite seu usuário") }}
+    </div>
+    <div class="mb-3">
+        {{ form.password.label(class="form-label") }}
+        {{ form.password(class="form-control", placeholder="Digite sua senha") }}
+    </div>
+    <div class="mb-3">
+        {{ form.confirm_password.label(class="form-label") }}
+        {{ form.confirm_password(class="form-control", placeholder="Confirme sua senha") }}
+    </div>
+    <div class="mb-3">
+        {{ form.role.label(class="form-label") }}
+        {{ form.role(class="form-control") }}
+    </div>
+    <div class="mb-3">
+        {{ form.submit(class="btn btn-primary w-100") }}
+    </div>
+</form>
+
+<p class="text-center">Já tem uma conta? <a href="{{ url_for('auth.login') }}">Fazer login</a></p>
+{% endblock %}

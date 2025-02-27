@@ -1,0 +1,126 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <div class="container mt-4">
+    <div class="card shadow">
+      <div class="card-header" style="background-color: #2c2322;">
+        <h2 class="mb-0" style="color: #ceb9af;">
+          <i class="fas fa-boxes"></i> Estoque
+        </h2>
+      </div>
+      <div class="card-body" style="background-color: #ffffff;">
+        <p class="lead" style="color: #2c2322;">
+          Gerencie os insumos do estoque central.
+        </p>
+
+        <!-- Mensagens Flash -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            {% for category, message in messages %}
+              <div class="alert alert-{{ category }} alert-dismissible fade show">
+                {{ message }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
+
+        <!-- Estoque -->
+        <div class="table-responsive">
+          <table class="table table-hover table-bordered" style="background-color: white; color: #2c2322;">
+            <thead style="background-color: #7b5b4a;">
+              <tr>
+                <th style="color: #ceb9af;">ID</th>
+                <th style="color: #ceb9af;">Ingrediente</th>
+                <th style="color: #ceb9af;">Quantidade Mínima</th>
+                <th style="color: #ceb9af;">Estoque Atual</th>
+                <th style="color: #ceb9af;">Unidade</th>
+                <th style="color: #ceb9af;">Última Atualização</th>
+                <th style="color: #ceb9af;">Ações</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for item in itens %}
+                <tr class="{% if item.quantidade_atual < item.quantidade_minima %}table-danger{% endif %}">
+                  <td>{{ item.id }}</td>
+                  <td>{{ item.nome }}</td>
+                  <td>{{ "%.2f"|format(item.quantidade_minima) }}</td>
+                  <td>
+                    <form method="POST" action="{{ url_for('dashboard.atualizar_estoque', item_id=item.id) }}" class="d-flex align-items-center">
+                      <input type="number" 
+                             name="quantidade_atual" 
+                             class="form-control form-control-sm" 
+                             value="{{ "%.2f"|format(item.quantidade_atual) }}" 
+                             step="0.01"
+                             style="width: 100px; margin-right: 10px;">
+                      <button type="submit" class="btn btn-sm" style="background-color: #7b5b4a; color: #ceb9af;">
+                        <i class="fas fa-sync-alt"></i>
+                      </button>
+                    </form>
+                  </td>
+                  <td>{{ item.unidade }}</td>
+                  <td>{{ item.data_atualizacao.strftime('%d/%m/%Y %H:%M') if item.data_atualizacao else 'Nunca' }}</td>
+                  <td>
+                    <a href="{{ url_for('dashboard.editar_item', item_id=item.id) }}" 
+                       class="btn btn-sm" 
+                       style="background-color: #2c2322; color: #ceb9af;" 
+                       title="Editar">
+                      <i class="fas fa-edit"></i>
+                    </a>
+                    <form method="POST" 
+                          action="{{ url_for('dashboard.remover_item', item_id=item.id) }}" 
+                          style="display:inline;"
+                          onsubmit="return confirm('Tem certeza que deseja remover este item?');">
+                      <button type="submit" 
+                              class="btn btn-sm" 
+                              style="background-color: #948c8c; color: #2c2322;" 
+                              title="Remover">
+                        <i class="fas fa-trash-alt"></i>
+                      </button>
+                    </form>
+                  </td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Seção de Uploads -->
+        <div class="mt-4 border-top pt-3">
+          <div class="row">
+            <div class="col-md-6">
+              <h5 style="color: #2c2322;">Upload de Tabela</h5>
+              <form action="{{ url_for('dashboard.upload_tabela') }}" method="POST" enctype="multipart/form-data">
+                <div class="input-group">
+                  <div class="custom-file">
+                    <input type="file" 
+                           class="custom-file-input" 
+                           name="file" 
+                           id="inputGroupFile"
+                           accept=".png,.jpg,.jpeg">
+                    <label class="custom-file-label" for="inputGroupFile">Selecione uma imagem</label>
+                  </div>
+                  <div class="input-group-append">
+                    <button class="btn" 
+                            type="submit" 
+                            style="background-color: #2c2322; color: #ceb9af;">
+                      <i class="fas fa-upload"></i> Enviar
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>        
+        <!-- Botão para Adicionar Novo Item -->
+        <div class="mt-4">
+          <a href="{{ url_for('dashboard.adicionar_item') }}" 
+             class="btn" 
+             style="background-color: #2c2322; color: #ceb9af;">
+            <i class="fas fa-plus-circle"></i> Adicionar Novo Ingrediente
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
