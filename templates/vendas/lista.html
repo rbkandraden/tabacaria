@@ -1,0 +1,54 @@
+<!-- templates/vendas/lista.html -->
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="card shadow">
+        <div class="card-header" style="background-color: #2c2322;">
+            <h2 class="mb-0" style="color: #ceb9af;">
+                <i class="fas fa-chart-line"></i> Controle de Vendas
+            </h2>
+        </div>
+        
+        <div class="card-body">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Produto</th>
+                        <th>Vendedor</th>
+                        <th>Quantidade</th>
+                        <th>Preço Unitário</th>
+                        <th>Total</th>
+                        <th>Recebido</th>
+                        <th>Saldo</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for venda in vendas %}
+                    <tr>
+                        <td>{{ venda.produto.nome }}</td>
+                        <td>{{ venda.vendedor.username }}</td>
+                        <td>{{ venda.quantidade }}</td>
+                        <td>R$ {{ "%.2f"|format(venda.preco_unitario) }}</td>
+                        <td>R$ {{ "%.2f"|format(venda.total) }}</td>
+                        <td>R$ {{ "%.2f"|format(venda.valor_recebido) }}</td>
+                        <td>R$ {{ "%.2f"|format(venda.saldo) }}</td>
+                        <td>
+                            <a href="{{ url_for('vendas.editar_venda', id=venda.id) }}" class="btn btn-sm btn-warning">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                            <form method="POST" action="{{ url_for('vendas.excluir_venda', id=venda.id) }}" style="display:inline;">
+                                <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Tem certeza?')">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-4">
+    <h2 class="mb-4"><i class="fas fa-boxes"></i> Gestão de Estoque</h2>
+    
+    <!-- Card de Resumo do Estoque -->
+    <div class="row mb-4">
+        <div class="col-md-4">
+            <div class="card text-white bg-primary">
+                <div class="card-body">
+                    <h5 class="card-title"><i class="fas fa-cubes"></i> Total em Estoque</h5>
+                    <p class="card-text display-6">R$ {{ "%.2f"|format(total_estoque) }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tabela de Produtos -->
+    <div class="card shadow">
+        <div class="card-header bg-dark text-white">
+            <h5 class="mb-0"><i class="fas fa-table"></i> Lista de Produtos</h5>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover table-striped">
+                    <thead class="thead-light">
+                        <tr>
+                            <th scope="col">Vendedor</th>
+                            <th scope="col">Item</th>
+                            <th scope="col" class="text-center">Quantidade</th>
+                            <th scope="col" class="text-end">Valor Unitário</th>
+                            <th scope="col" class="text-end">Valor Total</th>
+                            <th scope="col" class="text-center">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for produto in produtos %}
+                        <tr>
+                            <td>{{ produto.vendedor.nome if produto.vendedor else 'N/A' }}</td>
+                            <td>{{ produto.nome }}</td>
+                            <td class="text-center">{{ produto.quantidade_estoque }}</td>
+                            <td class="text-end">R$ {{ "%.2f"|format(produto.preco_unitario) }}</td>
+                            <td class="text-end">R$ {{ "%.2f"|format(produto.valor_total_estoque) }}</td>
+                            <td class="text-center">
+                                <div class="btn-group" role="group">
+                                    <a href="{{ url_for('dashboard.editar_produto', id=produto.id) }}" 
+                                       class="btn btn-sm btn-warning" 
+                                       title="Editar">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    <form method="POST" 
+                                          action="{{ url_for('dashboard.excluir_produto', id=produto.id) }}" 
+                                          onsubmit="return confirm('Tem certeza que deseja excluir este produto?');">
+                                        <button type="submit" 
+                                                class="btn btn-sm btn-danger ms-1" 
+                                                title="Excluir">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                        {% else %}
+                        <tr>
+                            <td colspan="6" class="text-center text-muted py-4">
+                                <i class="fas fa-box-open fa-2x mb-3"></i><br>
+                                Nenhum produto cadastrado
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

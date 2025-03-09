@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-4">
+    <h2><i class="fas fa-exchange-alt"></i> Transações</h2>
+    
+    <!-- Tabela de Vendas -->
+    <div class="card mb-4">
+        <div class="card-header bg-primary text-white">
+            <h5 class="mb-0"><i class="fas fa-hand-holding-usd"></i> Histórico de Vendas</h5>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>Item</th>
+                            <th>Quantidade</th>
+                            <th>Preço Total</th>
+                            <th>Recebido</th>
+                            <th>Saldo</th>
+                            <th>Valor Total</th>
+                            <th>Data</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for venda in vendas %}
+                        <tr>
+                            <td>{{ venda.produto.nome }}</td>
+                            <td>{{ venda.quantidade }}</td>
+                            <td>R$ {{ "%.2f"|format(venda.preco_unitario) }}</td>
+                            <td>R$ {{ "%.2f"|format(venda.valor_pago) }}</td>
+                            <td class="{{ 'text-danger' if venda.valor_total - venda.valor_pago > 0 else 'text-success' }}">
+                                R$ {{ "%.2f"|format(venda.valor_total - venda.valor_pago) }}
+                            </td>
+                            <td>R$ {{ "%.2f"|format(venda.valor_total) }}</td>
+                            <td>{{ venda.data_venda.strftime('%d/%m/%Y %H:%M') }}</td>
+                            <td>
+                                <span class="badge {{ 'bg-success' if venda.status == 'pago' else 'bg-warning' }}">
+                                    {{ venda.status|upper }}
+                                </span>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tabela de Pagamentos (mantida) -->
+    <!-- ... (código existente dos pagamentos) ... -->
+    
+</div>
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="card shadow">
+        <div class="card-header bg-info text-white">
+            <h4><i class="fas fa-box-open"></i> Registro de Retirada</h4>
+        </div>
+        <div class="card-body">
+            <form method="POST">
+                {{ form.hidden_tag() }}
+                
+                <div class="mb-3">
+                    {{ form.vendedor.label(class="form-label") }}
+                    {{ form.vendedor(class="form-select") }}
+                </div>
+                
+                <div class="mb-3">
+                    {{ form.item.label(class="form-label") }}
+                    {{ form.item(class="form-select") }}
+                </div>
+                
+                <div class="mb-3">
+                    {{ form.quantidade.label(class="form-label") }}
+                    {{ form.quantidade(class="form-control") }}
+                </div>
+                
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save"></i> Registrar
+                    </button>
+                    <a href="{{ url_for('dashboard.transacoes') }}" class="btn btn-secondary">
+                        <i class="fas fa-times"></i> Cancelar
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
