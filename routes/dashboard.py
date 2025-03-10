@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, flash, redirect, url_for
-from flask_login import login_required
+from flask_login import login_required, current_user
 from models import User, Vendedor, Produto, Venda, Pagamento, db
 from forms import RetiradaForm, PagamentoForm, ProdutoForm, VendedorForm
 
@@ -22,15 +22,12 @@ def estoque():
     total_estoque = db.session.query(
         db.func.sum(Produto.quantidade_estoque * Produto.preco_unitario)
     ).scalar() or 0.0
-    return render_template('dashboard/estoque.html',
-                         produtos=produtos,
-                         total_estoque=total_estoque)
+    return render_template('dashboard/estoque.html', produtos=produtos, total_estoque=total_estoque)
 
 @bp.route('/estoque/novo', methods=['GET', 'POST'])
 @login_required
 def novo_produto():
     form = ProdutoForm()
-    
     if form.validate_on_submit():
         try:
             produto = Produto(
@@ -45,7 +42,6 @@ def novo_produto():
         except Exception as e:
             db.session.rollback()
             flash(f'Erro: {str(e)}', 'danger')
-    
     return render_template('dashboard/adicionar_item.html', form=form)
 
 @bp.route('/estoque/editar/<int:id>', methods=['GET', 'POST'])
@@ -188,3 +184,6 @@ def transacoes():
                          vendas=vendas,
                          pagamentos=pagamentos,
                          total_estoque=total_estoque)
+
+
+

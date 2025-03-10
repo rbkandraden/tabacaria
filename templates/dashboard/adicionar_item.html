@@ -1,5 +1,4 @@
 {% extends "base.html" %}
-
 {% block content %}
 <div class="container mt-4">
     <div class="card shadow">
@@ -7,49 +6,37 @@
             <h4 class="mb-0"><i class="fas fa-plus-circle"></i> Adicionar Novo Item</h4>
         </div>
         <div class="card-body">
-            {% with messages = get_flashed_messages(with_categories=true) %}
-                {% if messages %}
-                    {% for category, message in messages %}
-                        <div class="alert alert-{{ category }} alert-dismissible fade show">
-                            {{ message }}
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                        </div>
-                    {% endfor %}
-                {% endif %}
-            {% endwith %}
-
             <form method="POST">
                 {{ form.hidden_tag() }}
                 
-                <!-- Campo Nome -->
                 <div class="mb-3">
                     {{ form.nome.label(class="form-label") }}
                     {{ form.nome(class="form-control") }}
-                    {% if form.nome.errors %}
-                        <div class="text-danger small mt-1">
-                            {% for error in form.nome.errors %}
-                                {{ error }}
-                            {% endfor %}
-                        </div>
-                    {% endif %}
+                    {% for error in form.nome.errors %}
+                        <div class="text-danger small">{{ error }}</div>
+                    {% endfor %}
                 </div>
 
-                <!-- Campo Quantidade -->
                 <div class="mb-3">
                     {{ form.quantidade.label(class="form-label") }}
                     {{ form.quantidade(class="form-control") }}
-                    {% if form.quantidade.errors %}
-                        <div class="text-danger small mt-1">
-                            {% for error in form.quantidade.errors %}
-                                {{ error }}
-                            {% endfor %}
-                        </div>
-                    {% endif %}
+                    {% for error in form.quantidade.errors %}
+                        <div class="text-danger small">{{ error }}</div>
+                    {% endfor %}
                 </div>
 
-                <!-- Botões -->
+                <div class="mb-3">
+                    {{ form.preco.label(class="form-label") }}
+                    {{ form.preco(class="form-control") }}
+                    {% for error in form.preco.errors %}
+                        <div class="text-danger small">{{ error }}</div>
+                    {% endfor %}
+                </div>
+
                 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                    {{ form.submit(class="btn btn-primary") }}
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save"></i> Salvar
+                    </button>
                     <a href="{{ url_for('dashboard.estoque') }}" class="btn btn-secondary">
                         <i class="fas fa-times"></i> Cancelar
                     </a>
