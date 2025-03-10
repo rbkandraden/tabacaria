@@ -1,20 +1,16 @@
-/* styles.css */
 :root {
-  --cor-fundo: #2c2322;      /* Cor principal de fundo */
-  --cor-primaria: #ceb9af;   /* Cor principal do texto */
-  --cor-secundaria: #de9b37; /* Cor de destaque */
-  --cor-terciaria: #948c8c;  /* Cor secundária */
-  --cor-quaternaria: #94848c;/* Cor de realce */
+  --cor-fundo: #000000;      /* Preto */
+  --cor-primaria: #ffffff;   /* Branco */
+  --cor-secundaria: #888888; /* Cinza médio */
+  --cor-terciaria: #666666;  /* Cinza escuro */
+  --cor-quaternaria: #444444;/* Cinza mais escuro */
 }
 
-/* Reset de estilos básicos */
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
-
-
 
 body {
   background-color: var(--cor-fundo);
@@ -25,7 +21,6 @@ body {
 }
 
 /* Override do Bootstrap */
-/* Cores principais */
 .bg-primary, .btn-primary {
   background-color: var(--cor-secundaria) !important;
   border-color: var(--cor-secundaria) !important;
@@ -35,7 +30,7 @@ body {
 .bg-secondary, .btn-secondary {
   background-color: var(--cor-terciaria) !important;
   border-color: var(--cor-terciaria) !important;
-  color: var(--cor-fundo) !important;
+  color: var(--cor-primaria) !important;
 }
 
 .bg-success, .btn-success {
@@ -52,7 +47,6 @@ body {
   background-color: var(--cor-fundo) !important;
 }
 
-/* Componentes específicos */
 .navbar {
   border-bottom: 2px solid var(--cor-secundaria);
 }
@@ -67,16 +61,15 @@ body {
 }
 
 .card {
-  background-color: rgba(44, 35, 34, 0.95);
+  background-color: rgba(0, 0, 0, 0.9);
   border: 1px solid var(--cor-secundaria);
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 6px rgba(255, 255, 255, 0.1);
 }
 
 .card-header {
   border-bottom: 2px solid var(--cor-secundaria);
 }
 
-/* Regra para o card de Estatísticas utilizando as variáveis definidas em :root */
 .card-header.estatisticas {
   background-color: var(--cor-secundaria) !important;
   border-color: var(--cor-secundaria) !important;
@@ -85,26 +78,26 @@ body {
 
 .table {
   --bs-table-bg: transparent;
-  --bs-table-striped-bg: rgba(44, 35, 34, 0.7);
-  --bs-table-hover-bg: rgba(123, 91, 74, 0.2);
+  --bs-table-striped-bg: rgba(255, 255, 255, 0.05);
+  --bs-table-hover-bg: rgba(136, 136, 136, 0.1);
 }
 
 .table thead th {
-  background-color: var(--cor-secundaria);
+  background-color: var(--cor-terciaria);
   border-color: var(--cor-secundaria);
 }
 
 .form-control {
-  background-color: rgba(206, 185, 175, 0.1);
+  background-color: rgba(255, 255, 255, 0.1);
   border: 1px solid var(--cor-secundaria);
   color: var(--cor-primaria);
   transition: all 0.3s ease;
 }
 
 .form-control:focus {
-  background-color: rgba(206, 185, 175, 0.2);
+  background-color: rgba(255, 255, 255, 0.2);
   border-color: var(--cor-primaria);
-  box-shadow: 0 0 0 0.25rem rgba(206, 185, 175, 0.25);
+  box-shadow: 0 0 0 0.25rem rgba(255, 255, 255, 0.25);
 }
 
 .btn {
@@ -118,7 +111,6 @@ body {
   opacity: 0.9;
 }
 
-/* Componentes customizados */
 .alert-custom {
   background-color: var(--cor-secundaria);
   border: 1px solid var(--cor-primaria);
@@ -126,17 +118,15 @@ body {
 }
 
 .login-card {
-  background-color: rgba(44, 35, 34, 0.95);
+  background-color: rgba(0, 0, 0, 0.9);
   border: 1px solid var(--cor-secundaria);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.1);
 }
 
-/* Efeitos de hover para tabelas */
 .table-hover tbody tr:hover {
-  background-color: rgba(123, 91, 74, 0.3) !important;
+  background-color: rgba(136, 136, 136, 0.2) !important;
 }
 
-/* Paginação personalizada */
 .page-item.active .page-link {
   background-color: var(--cor-secundaria);
   border-color: var(--cor-secundaria);
@@ -153,13 +143,11 @@ body {
   color: var(--cor-primaria);
 }
 
-/* Footer fixo */
 .footer {
   margin-top: auto;
   border-top: 2px solid var(--cor-secundaria);
 }
 
-/* Responsividade */
 @media (max-width: 768px) {
   .navbar-brand img {
     height: 30px;
@@ -175,7 +163,7 @@ body {
 }
 
 .table-hover tbody tr:hover {
-  background-color: #f8f9fa;
+  background-color: rgba(255, 255, 255, 0.1);
   cursor: pointer;
 }
 
@@ -187,4 +175,28 @@ body {
 .badge {
   font-size: 0.85em;
   padding: 0.5em 0.75em;
+}
+
+/* Efeito de fumaça atualizado */
+.smoke-effect {
+  color: var(--cor-primaria) !important; /* Forçar cor */
+  position: relative;
+  animation: smoke-drift 4s ease-in-out infinite;
+  text-shadow: 
+      0 0 8px rgba(255, 255, 255, 0.4),
+      0 0 15px rgba(255, 255, 255, 0.3),
+      0 0 20px rgba(136, 136, 136, 0.2);
+  transition: all 0.4s ease;
+  z-index: 1;
+}
+
+@keyframes smoke-drift {
+  0%, 100% { 
+      transform: translateY(0) rotate(0.5deg);
+      filter: blur(0.2px);
+  }
+  50% { 
+      transform: translateY(-2px) rotate(-0.5deg);
+      filter: blur(0.5px);
+  }
 }

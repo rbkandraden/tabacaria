@@ -1,29 +1,18 @@
 {% extends 'base.html' %}
 {% block content %}
 <div class="container mt-4">
-    <h2 class="mb-4"><i class="fas fa-boxes"></i> Gestão de Estoque</h2>
+    <h1 class="text-center mb-5 smoke-effect">
+        <i class="fas fa-boxes"></i> Gestão de Vendas
+    </h1>
     
-    <!-- Card de Resumo do Estoque -->
-    <div class="row mb-4">
-        <div class="col-md-4">
-            <div class="card text-white bg-primary">
-                <div class="card-body">
-                    <h5 class="card-title"><i class="fas fa-cubes"></i> Total em Estoque</h5>
-                    <p class="card-text display-6">R$ {{ "%.2f"|format(total_estoque) }}</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Tabela de Produtos -->
     <div class="card shadow">
-        <div class="card-header bg-dark text-white">
+        <div class="card-header bg-secondary">
             <h5 class="mb-0"><i class="fas fa-table"></i> Lista de Produtos</h5>
         </div>
         <div class="card-body">
             <div class="table-responsive">
                 <table class="table table-hover table-striped">
-                    <thead class="thead-light">
+                    <thead>
                         <tr>
                             <th scope="col">Vendedor</th>
                             <th scope="col">Item</th>
@@ -44,7 +33,7 @@
                             <td class="text-center">
                                 <div class="btn-group" role="group">
                                     <a href="{{ url_for('dashboard.editar_produto', id=produto.id) }}" 
-                                       class="btn btn-sm btn-warning" 
+                                       class="btn btn-sm btn-primary" 
                                        title="Editar">
                                         <i class="fas fa-edit"></i>
                                     </a>
