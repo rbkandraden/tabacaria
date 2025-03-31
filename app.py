@@ -1,19 +1,13 @@
 from flask import Flask, redirect, url_for, render_template
 import os
 from extensions import db, bcrypt, login_manager, configure_extensions, migrate
+from config import Config
 
 def create_app():
     app = Flask(__name__)
-    
-    # Configurações principais
-    app.config.update({
-        'SECRET_KEY': os.getenv('SECRET_KEY', 'dev-key-123'),
-        'SQLALCHEMY_DATABASE_URI': 'sqlite:///' + os.path.join(app.instance_path, 'tabacaria.db'),
-        'SQLALCHEMY_TRACK_MODIFICATIONS': False,
-        'UPLOAD_FOLDER': os.path.join(app.root_path, 'static', 'uploads'),
-        'MAX_CONTENT_LENGTH': 16 * 1024 * 1024,  # 16MB
-        'ALLOWED_EXTENSIONS': {'png', 'jpg', 'jpeg', 'gif'}
-    })
+
+    # Configurar o aplicativo com as configurações externas
+    app.config.from_object(Config)
 
     # Configurar extensões
     configure_extensions(app)
@@ -29,15 +23,15 @@ def create_app():
         """
 
     with app.app_context():
-        # Criar estrutura de diretórios
+        # Criar estrutura de diretórios necessários
         required_folders = [
-            app.instance_path,
-            app.config['UPLOAD_FOLDER'],
-            os.path.join(app.root_path, 'temp_uploads')
+            app.instance_path,  # Diretório da instância
+            app.config['UPLOAD_FOLDER'],  # Diretório de uploads
+            os.path.join(app.root_path, 'temp_uploads')  # Diretório temporário para uploads
         ]
         
         for folder in required_folders:
-            os.makedirs(folder, exist_ok=True)
+            os.makedirs(folder, exist_ok=True)  # Cria a pasta se não existir
 
         # Importar modelos para criação de tabelas
         from models import User, Produto, Venda, Pagamento
@@ -51,7 +45,7 @@ def create_app():
                 username='admin',
                 role='admin'
             )
-            admin.set_password('admin123')
+            admin.set_password('admin123')  # Senha do admin
             db.session.add(admin)
             try:
                 db.session.commit()
@@ -70,7 +64,7 @@ def create_app():
     # Rotas básicas
     @app.route('/')
     def index():
-        return redirect(url_for('auth.login'))
+        return redirect(url_for('auth.login'))  # Redireciona para a página de login
 
     # Manipuladores de erro
     @app.errorhandler(404)

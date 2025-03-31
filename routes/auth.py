@@ -31,12 +31,7 @@ def logout():
     return redirect(url_for('auth.login'))
 
 @bp.route('/register', methods=['GET', 'POST'])
-@login_required
 def register():
-    if current_user.role != 'admin':
-        flash('Acesso não autorizado', 'danger')
-        return redirect(url_for('dashboard.dashboard'))
-    
     form = RegistrationForm()
     
     if form.validate_on_submit():
