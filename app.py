@@ -18,6 +18,16 @@ def create_app():
     # Configurar extensões
     configure_extensions(app)
 
+    # Rota de debug para verificar arquivos estáticos
+    @app.route('/debug-path')
+    def debug_path():
+        css_path = os.path.join(app.static_folder, 'css', 'styles.css')
+        return f"""
+        Static folder: {app.static_folder}<br>
+        CSS path: {css_path}<br>
+        Exists: {os.path.exists(css_path)}
+        """
+
     with app.app_context():
         # Criar estrutura de diretórios
         required_folders = [
@@ -29,7 +39,7 @@ def create_app():
         for folder in required_folders:
             os.makedirs(folder, exist_ok=True)
 
-        # Importar modelos para criação de tabelas (ATUALIZADO)
+        # Importar modelos para criação de tabelas
         from models import User, Produto, Venda, Pagamento
         
         # Criar todas as tabelas
@@ -75,4 +85,4 @@ def create_app():
 
 if __name__ == '__main__':
     app = create_app()
-    app.run(debug=True)
+    app.run(debug=os.getenv('FLASK_DEBUG', 'False') == 'True')

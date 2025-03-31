@@ -1,0 +1,321 @@
+/* =============== VARIÁVEIS =============== */
+:root {
+  --bg-primary: #0a0a0a;
+  --bg-secondary: #1a1a1a;
+  --accent: #00ff88;
+  --text-primary: #e0e0e0;
+  --text-secondary: #888;
+  --neon-effect: 0 0 15px rgba(0, 255, 136, 0.3);
+  --cor-fundo: #000000;
+  --cor-primaria: #ffffff;
+  --cor-secundaria: #888888;
+  --cor-terciaria: #666666;
+  --cor-quaternaria: #444444;
+}
+
+/* =============== RESET & BASE =============== */
+* {
+  box-sizing: border-box; /* Para garantir que o padding e a borda sejam incluídos na largura total */ 
+  margin: 0;  /* Remove margens padrão */
+  padding: 0;   /* Remove preenchimento padrão */
+}
+
+body { 
+  background-color: var(--cor-fundo); /* Cor de fundo padrão */
+  color: var(--cor-primaria); /* Cor do texto padrão */
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding-top: 70px; /* Para navbar fixo */
+}
+
+/* =============== ANIMAÇÕES =============== */
+@keyframes smoke-drift {
+  0% { transform: translateY(0) scale(1); opacity: 0.9; }
+  100% { transform: translateY(-80vh) scale(4); opacity: 0; }
+}
+
+@keyframes particle-fade {
+  to { opacity: 0 }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px) }
+  to { opacity: 1; transform: translateY(0) }
+}
+
+/* =============== COMPONENTES =============== */
+/* NAVBAR */ 
+.navbar { 
+  border-bottom: 2px solid var(--cor-fundo);
+  background-color: rgb(0, 0, 0) !important;
+  backdrop-filter: blur(10px); 
+}
+
+.nav-link {
+  transition: all 0.3s ease;
+}
+
+.nav-link:hover {
+  transform: translateY(-2px);
+  opacity: 0.8;
+}
+
+/* CARDS */
+.card {
+  background-color: rgba(0, 0, 0, 0.9);
+  border: 1px solid var(--cor-secundaria);
+  box-shadow: 0 4px 6px rgba(255, 255, 255, 0.1);
+}
+
+.card-header {
+  border-bottom: 2px solid var(--cor-secundaria);
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.card-header.estatisticas {
+  background-color: var(--cor-secundaria) !important;
+  border-color: var(--cor-secundaria) !important;
+  color: var(--cor-primaria) !important;
+}
+
+.login-card {
+  background-color: rgba(0, 0, 0, 0.9);
+  border: 1px solid var(--cor-secundaria);
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.1);
+}
+
+/* TABELAS */
+.table {
+  --bs-table-bg: transparent;
+  --bs-table-striped-bg: rgba(255, 255, 255, 0.05);
+  --bs-table-hover-bg: rgba(136, 136, 136, 0.1);
+}
+
+.table thead th {
+  background-color: var(--cor-terciaria);
+  border-color: var(--cor-secundaria);
+}
+
+.table-hover tbody tr:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  cursor: pointer;
+}
+
+/* FORMULÁRIOS */
+.form-control {
+  background-color: rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--cor-secundaria);
+  color: var(--cor-primaria);
+  transition: all 0.3s ease;
+}
+
+.form-control:focus {
+  background-color: rgba(255, 255, 255, 0.2);
+  border-color: var(--cor-primaria);
+  box-shadow: 0 0 0 0.25rem rgba(255, 255, 255, 0.25);
+}
+
+/* BOTÕES */
+.btn {
+  transition: all 0.3s ease;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  opacity: 0.9;
+}
+
+.btn:active {
+  transform: translateY(1px);
+  filter: brightness(90%);
+}
+
+/* PAGINAÇÃO */
+.page-item.active .page-link {
+  background-color: var(--cor-secundaria);
+  border-color: var(--cor-secundaria);
+}
+
+.page-link {
+  color: var(--cor-primaria);
+  background-color: transparent;
+  border: 1px solid var(--cor-secundaria);
+}
+
+.page-link:hover {
+  background-color: var(--cor-secundaria);
+  color: var(--cor-primaria);
+}
+
+/* ALERTAS */
+.alert-custom {
+  background-color: var(--cor-secundaria);
+  border: 1px solid var(--cor-primaria);
+  color: var(--cor-primaria);
+}
+
+/* BADGES */
+.badge {
+  font-size: 0.85em;
+  padding: 0.5em 0.75em;
+}
+
+/* =============== EFEITOS VISUAIS =============== */
+.smoke-effect {
+  color: var(--cor-primaria) !important;
+  position: relative;
+  animation: smoke-drift 4s ease-in-out infinite;
+  text-shadow: 
+      0 0 8px rgba(255, 255, 255, 0.4),
+      0 0 15px rgba(255, 255, 255, 0.3),
+      0 0 20px rgba(136, 136, 136, 0.2);
+  transition: all 0.4s ease;
+  z-index: 1;
+}
+
+.smoke-particle {
+  position: fixed;
+  width: 8px;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  animation: smoke-drift 2s ease-out forwards;
+  filter: blur(4px);
+  mix-blend-mode: screen;
+}
+
+/* =============== CLASSES CUSTOMIZADAS =============== */
+.smoke-card::before {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to top, rgba(100, 100, 100, 0.05) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.btn-custom-gray {
+  background-color: #333333 !important;
+  border: 1px solid #666666 !important;
+  color: #cccccc !important;
+  transition: all 0.3s ease;
+}
+
+.btn-hover-custom {
+  transition: all 0.3s ease;
+  border-width: 2px;
+}
+
+.bg-black {
+  background-color: #000000 !important;
+}
+
+.border-dark {
+  border: 2px solid #333333 !important;
+}
+
+.btn-neon {
+  background: linear-gradient(45deg, var(--accent) 30%, #00ccff 100%);
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  color: var(--bg-primary);
+  font-weight: 700;
+  text-transform: uppercase;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.card-holographic {
+  background: linear-gradient(
+    145deg,
+    rgba(16,16,16,0.9) 0%,
+    rgba(32,32,32,0.8) 100%
+  );
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 16px;
+  box-shadow: 
+    0 8px 32px rgba(0,0,0,0.3),
+    inset 0 0 20px rgba(0,255,136,0.05);
+  position: relative;
+  overflow: hidden;
+}
+
+.grid-system {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  padding: 2rem;
+}
+
+.fade-in {
+  animation: fadeIn 0.6s ease-out forwards;
+}
+
+.hover-glow {
+  transition: filter 0.3s ease;
+}
+
+.dashboard-container {
+  background: #000;
+}
+
+/* =============== MEDIA QUERIES =============== */
+@media (max-width: 768px) {
+  .navbar-brand img {
+    height: 30px;
+  }
+  
+  .card {
+    margin: 0.5rem;
+  }
+  
+  .table-responsive {
+    overflow-x: auto;
+  }
+}
+
+/* NOVOS EFEITOS ADICIONADOS (SEM REMOVER NADA) */
+[data-hover="glow"] {
+  transition: filter 0.3s ease;
+}
+
+[data-hover="glow"]:hover {
+  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.3));
+}
+/* =============== FUNDO COM IMAGEM =============== */
+body {
+  background: linear-gradient(rgba(0, 0, 0, 0.92), rgba(0, 0, 0, 0.88)),
+              url('../img/smoke.jpg') center/cover fixed;
+  background-blend-mode: multiply;
+  min-height: 100vh            
+}
+
+/* Ajuste de transparência para componentes */
+.card, .login-card, .glass-card, .alert {
+  backdrop-filter: blur(8px);
+}
+
+/* Remove elementos de fumaça */
+#smokeCanvas, .smoke-effect, .smoke-particle {
+  display: none !important;
+}
+
+.dashboard-container {
+  background: transparent !important;
+}
+
+body {
+  background-blend-mode: multiply; /* Melhora a integração cor/foto */
+  filter: contrast(1.9); /* Acentua detalhes */
+}
+

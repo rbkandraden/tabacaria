@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block title %}Tabela Completa de Estoque{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <!-- Botão de Voltar -->
+    <a href="{{ url_for('dashboard.estoque') }}" class="btn btn-secondary mb-3">
+        <i class="fas fa-arrow-left"></i> Voltar
+    </a>
+
+    <div class="text-end mb-3">
+        <a href="{{ url_for('dashboard.estoque_tabela') }}" class="btn btn-outline-primary">
+            <i class="fas fa-expand"></i> Ver Tabela Ampliada
+        </a>
+    </div>
+
+    <!-- Tabela via Partial Template -->
+    <div class="card shadow">
+        <div class="card-header bg-secondary">
+            <h5 class="mb-0"><i class="fas fa-table"></i> Tabela Completa</h5>
+        </div>
+        <div class="card-body">
+            {% include 'dashboard/partials/_tabela_estoque.html' %}
+        </div>
+    </div>
+</div>
+{% endblock %}

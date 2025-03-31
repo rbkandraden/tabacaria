@@ -10,7 +10,7 @@ class User(db.Model, UserMixin):
     role = db.Column(db.String(20), nullable=False, default='funcionario')
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     
-    vendedor = db.relationship('Vendedor', back_populates='user', uselist=False)
+    vendedor = db.relationship('Vendedor', back_populates='user', uselist=True)
 
     def set_password(self, password):
         self.password_hash = bcrypt.generate_password_hash(password).decode('utf-8')

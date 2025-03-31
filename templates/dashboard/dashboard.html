@@ -1,23 +1,42 @@
 {% extends "base.html" %}
 
-{% block content %}
-<div class="container mt-4">
-    <div class="row row-cols-1 row-cols-md-3 g-4">
+{% block title %}Dashboard{% endblock %}
 
-        <!-- Card de Ações Rápidas -->
-        <div class="col">
-            <div class="card h-100 shadow">
-                <div class="card-header bg-success text-white">
-                    <h5 class="mb-0"><i class="fas fa-bolt"></i> Ações Rápidas</h5>
-                </div>
-                <div class="card-body d-grid gap-2">
-                    <a href="{{ url_for('dashboard.novo_produto') }}" class="btn btn-outline-success">
-                        <i class="fas fa-plus-circle"></i> Novo Item
-                    </a>
-                    <a href="{{ url_for('dashboard.estoque') }}" class="btn btn-outline-primary">
-                        <i class="fas fa-boxes"></i> Ver Estoque
-                    </a>
+{% block content %}
+<div class="dashboard-container">
+    <div class="dashboard-content">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-8 col-lg-6 text-center">
+                    <!-- Card com efeito de fumaça em escala de cinza -->
+                    <div class="glass-card">
+                        <div class="card-body p-4">
+                            <div class="card-icon mb-3">
+                                <i class="fas fa-sliders-h fa-2x"></i>
+                            </div>
+                            <h2 class="card-title mb-3">
+                                Controle Principal
+                            </h2>
+                            <a href="{{ url_for('dashboard.estoque')}}" 
+                               class="btn-glass"
+                               id="estoque-btn">
+                                <i class="fas fa-boxes me-2"></i> Gerenciar Estoque
+                            </a>
+
+                            <!-- Novo Botão de Estatísticas -->
+                            <a href="{{ url_for('dashboard.estatisticas')}}" 
+                               class="btn-glass"
+                               id="stats-btn">
+                                <i class="fas fa-chart-pie me-2"></i> Ver Estatísticas
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
+    </div>
+</div>
+
+<script src="{{ url_for('static', filename='js/dashboard-effects.js') }}"></script>
+
 {% endblock %}
